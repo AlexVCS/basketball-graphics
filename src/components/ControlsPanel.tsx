@@ -35,6 +35,16 @@ export default function ControlsPanel({
           </select>
         </div>
         <div className="control-group">
+          <label htmlFor="away-record">Record</label>
+          <input
+            id="away-record"
+            type="text"
+            placeholder="W-L"
+            value={scoreboard.awayRecord}
+            onChange={(e) => handlers.onAwayRecordChange(e.target.value)}
+          />
+        </div>
+        <div className="control-group">
           <label htmlFor="away-score">Score</label>
           <div className="score-input">
             <button
@@ -77,6 +87,16 @@ export default function ControlsPanel({
           >
             {teamOptions}
           </select>
+        </div>
+        <div className="control-group">
+          <label htmlFor="home-record">Record</label>
+          <input
+            id="home-record"
+            type="text"
+            placeholder="W-L"
+            value={scoreboard.homeRecord}
+            onChange={(e) => handlers.onHomeRecordChange(e.target.value)}
+          />
         </div>
         <div className="control-group">
           <label htmlFor="home-score">Score</label>
@@ -136,6 +156,17 @@ export default function ControlsPanel({
             placeholder="12:00"
             value={scoreboard.gameClock}
             onChange={(e) => handlers.onGameClockChange(e.target.value)}
+          />
+        </div>
+        <div className="control-group">
+          <label htmlFor="shot-clock">Shot Clock</label>
+          <input
+            id="shot-clock"
+            className="clock-input"
+            type="text"
+            placeholder=":24"
+            value={scoreboard.shotClock}
+            onChange={(e) => handlers.onShotClockChange(e.target.value)}
           />
         </div>
       </div>
