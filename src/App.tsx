@@ -1,12 +1,7 @@
-import './App.css'
+import GraphicsLayout from "./components/GraphicsLayout";
 
 function App() {
-
-  return (
-    <>
-      <div>hi</div>
-    </>
-  )
+  return <GraphicsLayout />;
 }
 
-export default App
+export default App;
