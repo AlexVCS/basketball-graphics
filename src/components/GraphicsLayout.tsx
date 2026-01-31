@@ -10,8 +10,11 @@ export default function GraphicsLayout() {
     awayTeam: "celtics",
     homeScore: 108,
     awayScore: 102,
+    homeRecord: "29-19",
+    awayRecord: "38-10",
     quarter: "3rd",
     gameClock: "5:42",
+    shotClock: ":24",
   });
 
   const handlers: ScoreboardHandlers = {
@@ -23,10 +26,16 @@ export default function GraphicsLayout() {
       setScoreboard((prev) => ({ ...prev, homeScore: score })),
     onAwayScoreChange: (score: number) =>
       setScoreboard((prev) => ({ ...prev, awayScore: score })),
+    onHomeRecordChange: (record: string) =>
+      setScoreboard((prev) => ({ ...prev, homeRecord: record })),
+    onAwayRecordChange: (record: string) =>
+      setScoreboard((prev) => ({ ...prev, awayRecord: record })),
     onQuarterChange: (quarter: string) =>
       setScoreboard((prev) => ({ ...prev, quarter })),
     onGameClockChange: (clock: string) =>
       setScoreboard((prev) => ({ ...prev, gameClock: clock })),
+    onShotClockChange: (clock: string) =>
+      setScoreboard((prev) => ({ ...prev, shotClock: clock })),
   };
 
   return (
