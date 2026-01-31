@@ -151,8 +151,8 @@ export const NBA_TEAMS: Record<string, NBATeamInfo> = {
     teamId: 1610612762,
     name: "Jazz",
     abbreviation: "UTA",
-    primaryColor: "#002B5C",
-    secondaryColor: "#00471B",
+    primaryColor: "#d9d9f0",
+    secondaryColor: "#e7e7e7",
   },
 
   // Pacific Division
