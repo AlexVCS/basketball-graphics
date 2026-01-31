@@ -1,4 +1,4 @@
-FROM node:20-alpine AS build
+FROM node:20-bookworm-slim AS build
 
 WORKDIR /app
 
@@ -9,7 +9,7 @@ COPY . .
 
 RUN npm run build
 
-FROM nginx:alpine
+FROM nginx:bookworm
 
 RUN rm /etc/nginx/conf.d/default.conf
 
