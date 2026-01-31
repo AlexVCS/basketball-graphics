@@ -15,7 +15,9 @@ RUN rm /etc/nginx/conf.d/default.conf && \
     rm -rf /docker-entrypoint.d/* && \
     mkdir -p /tmp/nginx/{client_temp,proxy_temp,fastcgi_temp,uwsgi_temp,scgi_temp} /var/run/nginx
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=build /app/dist /usr/share/nginx/html
 
