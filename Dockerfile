@@ -23,7 +23,7 @@ COPY --from=build /app/dist /usr/share/nginx/html
 
 RUN chmod -R g+r /usr/share/nginx/html && \
     chgrp -R 0 /usr/share/nginx/html && \
-    chown -R nginx:nginx /tmp/nginx /var/run/nginx /var/cache/nginx
+    chmod -R 777 /tmp/nginx /var/run/nginx /var/cache/nginx
 
 USER nginx
 
