@@ -2,12 +2,12 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
-RUN corepack enable && pnpm install --frozen-lockfile
+COPY package.json npm-lock.yaml ./
+RUN corepack enable && npm install --frozen-lockfile
 
 COPY . .
 
-RUN pnpm build
+RUN npm build
 
 FROM nginx:alpine
 
