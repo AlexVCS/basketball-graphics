@@ -9,20 +9,11 @@ COPY . .
 
 RUN npm run build
 
-FROM nginx:bookworm
-
-RUN rm -rf /docker-entrypoint.d/* && \
-    mkdir -p /tmp/nginx/{client_temp,proxy_temp,fastcgi_temp,uwsgi_temp,scgi_temp} /var/run/nginx
+FROM nginx:unprivileged
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=build /app/dist /usr/share/nginx/html
-
-RUN chmod -R g+r /usr/share/nginx/html && \
-    chgrp -R 0 /usr/share/nginx/html && \
-    chmod -R 777 /tmp/nginx /var/run/nginx /var/cache/nginx
-
-USER nginx
 
 EXPOSE 8080
 
