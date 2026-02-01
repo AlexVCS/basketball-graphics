@@ -1,27 +1,68 @@
 .scorebug {
   display: flex;
   flex-direction: column;
-  background: #0d0d0d;
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   font-family: "Segoe UI", "Roboto", "Arial", sans-serif;
-  width: 380px;
+  width: 340px;
 }
 
-/* ROW 1: Game Info (Quarter, Clock, Shot Clock) */
+/* Main Content Area: Logo - Center - Logo */
+.scorebug-main {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+/* Logo Sections (Left & Right) */
+.scorebug-logo-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: var(--team-primary);
+}
+
+.scorebug-logo-section.editable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.scorebug-logo-section.editable:hover {
+  filter: brightness(1.1);
+}
+
+.scorebug-team-logo {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Center Content: Game Info + Scores */
+.scorebug-center {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+}
+
+/* Game Info Bar - Compact, Floating on top */
 .scorebug-game-info {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 2px 8px;
-  background: #2a2a2a;
+  gap: 4px;
+  padding: 4px 6px;
+  background: #1a1a1a;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 
 .scorebug-quarter {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
   color: #ffffff;
   text-transform: uppercase;
@@ -32,104 +73,223 @@
 .scorebug-clock {
   font-size: 16px;
   font-weight: 700;
-  color: #ffffff;
+  color: #1a1a1a;
+  background: #e8e8e8;
+  padding: 2px 8px;
+  border-radius: 2px;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
 .scorebug-shot-clock {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
-/* ROW 2: Teams & Scores */
-.scorebug-scores-row {
+/* Scores Section - Full height with team colors */
+.scorebug-scores {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
-}
-
-/* Team Section (Away & Home) */
-.scorebug-team-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 6px;
   flex: 1;
-  background-color: var(--team-primary);
-}
-
-.scorebug-team-section--away {
-  justify-content: flex-start;
-}
-
-.scorebug-team-section--home {
-  justify-content: flex-end;
-}
-
-.scorebug-team-info {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0;
-  text-align: center;
-}
-
-.scorebug-team-logo {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  display: block;
-}
-
-.scorebug-team-abbr {
-  font-size: 11px;
-  font-weight: 800;
-  color: #ffffff;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  line-height: 1;
-}
-
-.scorebug-team-text {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-.scorebug-team-record {
-  font-size: 9px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
-  letter-spacing: 0.03em;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  line-height: 1;
-}
-
-/* Scores Center Section */
-.scorebug-scores-center {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: center;
-  gap: 0;
+  width: 100%;
+  min-height: 70px;
 }
 
 .scorebug-score {
-  font-size: 28px;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 36px;
   font-weight: 800;
   color: #ffffff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   line-height: 1;
   font-variant-numeric: tabular-nums;
-  padding: 4px 8px;
+  padding: 8px 12px 4px;
+  background-color: var(--team-primary);
+}
+
+/* Bottom Row: Team Names & Records */
+.scorebug-bottom {
+  display: flex;
+  flex-direction: row;
+  background: #1a1a1a;
+}
+
+.scorebug-team-info {
+  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: var(--team-primary);
+  gap: 6px;
+  padding: 6px 10px;
+}
+
+.scorebug-team-info--away {
+  justify-content: flex-start;
+}
+
+.scorebug-team-info--home {
+  justify-content: flex-end;
+}
+
+.scorebug-team-abbr {
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.scorebug-team-record {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1;
+}
+
+/* ======================= */
+/* EDIT MODE STYLES        */
+/* ======================= */
+
+/* Edit mode glow effect on scorebug */
+.scorebug.edit-mode {
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(255, 200, 50, 0.4),
+    0 0 60px rgba(255, 200, 50, 0.2);
+  outline: 2px solid rgba(255, 200, 50, 0.6);
+  transition: all 0.3s ease;
+}
+
+/* Editable field wrapper */
+.editable-wrapper {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Base editable field styles */
+.editable-field {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  position: relative;
+}
+
+/* Hover state for editable fields in edit mode */
+.scorebug.edit-mode .editable-field:hover {
+  background: rgba(255, 200, 50, 0.2);
+  outline: 2px solid rgba(255, 200, 50, 0.5);
+}
+
+/* Team field specific styles */
+.editable-field.team-field {
+  padding: 2px 6px;
+}
+
+/* Editable input styles */
+.editable-input {
+  background: rgba(0, 0, 0, 0.6) !important;
+  border: 2px solid rgba(255, 200, 50, 0.8) !important;
+  outline: none !important;
+  text-align: center;
+  font-family: inherit;
+  font-weight: inherit;
+  color: #ffffff !important;
+}
+
+/* Quarter select dropdown */
+.editable-select {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 2px solid rgba(255, 200, 50, 0.8) !important;
+  outline: none !important;
+  cursor: pointer;
+  padding: 2px 4px;
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  color: #ffffff !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.editable-select option {
+  background: #1a1a1a;
+  color: white;
+}
+
+/* Score input specific - wider for 3-digit numbers */
+.scorebug-score .editable-input {
+  width: 70px;
+  font-size: 36px;
+  padding: 2px;
+}
+
+/* Clock input specific */
+.scorebug-clock.editable-input {
+  width: 60px;
+  font-size: 16px;
+  background: #e8e8e8 !important;
+  color: #1a1a1a !important;
+}
+
+.scorebug-shot-clock.editable-input {
+  width: 40px;
+  font-size: 14px;
+}
+
+/* Record input specific */
+.record-value.editable-input {
+  width: 70px;
+  font-size: 11px;
+}
+
+/* Error states */
+.editable-wrapper.has-error .editable-field,
+.editable-field.has-error {
+  outline: 2px solid #ff4444 !important;
+  background: rgba(255, 68, 68, 0.15) !important;
+}
+
+.field-error {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 68, 68, 0.95);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 100;
+  margin-top: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.field-error::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom-color: rgba(255, 68, 68, 0.95);
+}
+
+/* Score value display */
+.score-value {
+  display: inline-block;
+}
+
+/* Record value display */
+.record-value {
+  display: inline;
 }

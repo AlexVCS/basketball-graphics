@@ -1,0 +1,183 @@
+/* Top Bar Layout */
+.edit-controls-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 65px;
+  background: rgba(20, 20, 30, 0.98);
+  z-index: 500;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+/* View mode styling */
+.edit-controls-bar.view-mode {
+  border-bottom: 2px solid rgba(100, 100, 120, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Edit mode styling - prominent glow */
+.edit-controls-bar.edit-mode {
+  border-bottom: 2px solid rgba(255, 200, 50, 0.8);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 4px 20px rgba(255, 200, 50, 0.3);
+}
+
+/* Centered content container */
+.edit-controls-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 0 24px;
+}
+
+/* Mode indicator */
+.edit-controls-mode {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.view-mode .edit-controls-mode {
+  color: rgba(150, 150, 170, 0.9);
+}
+
+.edit-mode .edit-controls-mode {
+  color: rgba(255, 200, 50, 1);
+}
+
+.mode-icon {
+  font-size: 18px;
+}
+
+/* Buttons container */
+.edit-controls-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Button base styles */
+.edit-control-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-control-btn:hover {
+  transform: translateY(-2px);
+}
+
+.edit-control-btn:active {
+  transform: translateY(0);
+}
+
+.edit-control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-icon {
+  font-size: 16px;
+}
+
+/* Edit button */
+.edit-btn {
+  background: linear-gradient(135deg, #4a90d9, #357abd);
+  color: white;
+}
+
+.edit-btn:hover {
+  background: linear-gradient(135deg, #5a9fe8, #4589cc);
+  box-shadow: 0 4px 15px rgba(74, 144, 217, 0.4);
+}
+
+/* Save button */
+.save-btn {
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  color: white;
+}
+
+.save-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5cbf60, #43a047);
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+}
+
+/* Cancel button */
+.cancel-btn {
+  background: linear-gradient(135deg, #666, #555);
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: linear-gradient(135deg, #777, #666);
+  box-shadow: 0 4px 15px rgba(100, 100, 100, 0.3);
+}
+
+/* Keyboard shortcut badges */
+.edit-control-btn kbd {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: monospace;
+  margin-left: 4px;
+}
+
+/* Shortcuts legend */
+.edit-controls-shortcuts {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: rgba(150, 150, 170, 0.7);
+  padding-left: 20px;
+  border-left: 1px solid rgba(100, 100, 120, 0.3);
+}
+
+.shortcut-label {
+  font-weight: 600;
+}
+
+.shortcut {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shortcut kbd {
+  background: rgba(100, 100, 120, 0.3);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .edit-controls-shortcuts {
+    display: none;
+  }
+  
+  .edit-controls-content {
+    gap: 16px;
+  }
+}

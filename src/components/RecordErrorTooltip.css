@@ -1,0 +1,58 @@
+.record-error-container {
+  position: fixed;
+  display: flex;
+  gap: 8px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.record-error-box {
+  flex: 1;
+  max-width: 140px;
+  min-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.record-error-box.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.record-error-box.away-error {
+  /* Align to left */
+}
+
+.record-error-box.home-error {
+  /* Align to right */
+  margin-left: auto;
+}
+
+.record-error-box.visible {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 8px 10px;
+  background: rgba(255, 68, 68, 0.95);
+  border: 2px solid #ff4444;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.record-error-icon {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  line-height: 1;
+}
+
+.record-error-message {
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  line-height: 1.3;
+  word-wrap: break-word;
+}

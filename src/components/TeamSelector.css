@@ -1,0 +1,181 @@
+.team-selector {
+  position: fixed;
+  background: rgba(25, 25, 35, 0.98);
+  border: 2px solid rgba(100, 100, 120, 0.5);
+  border-radius: 12px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(100, 100, 120, 0.2);
+  z-index: 2000;
+  width: 280px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+/* Header with title and current team */
+.team-selector-header {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(100, 100, 120, 0.3);
+  background: rgba(40, 40, 55, 0.6);
+}
+
+.team-selector-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.team-selector-current {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(100, 150, 255, 0.15);
+  border: 1px solid rgba(100, 150, 255, 0.3);
+  border-radius: 6px;
+}
+
+.team-selector-current-label {
+  font-size: 11px;
+  color: rgba(150, 150, 170, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.team-selector-current-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.team-selector-current-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+
+.team-selector-search {
+  padding: 12px;
+  border-bottom: 1px solid rgba(100, 100, 120, 0.3);
+}
+
+.team-selector-input {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(50, 50, 60, 0.8);
+  border: 1px solid rgba(100, 100, 120, 0.4);
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.team-selector-input:focus {
+  border-color: rgba(100, 150, 255, 0.6);
+}
+
+.team-selector-input::placeholder {
+  color: rgba(150, 150, 170, 0.6);
+}
+
+.team-selector-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.team-selector-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.team-selector-item:hover,
+.team-selector-item.highlighted {
+  background: rgba(100, 100, 120, 0.3);
+}
+
+.team-selector-item.current {
+  background: rgba(100, 150, 255, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.4);
+}
+
+.team-selector-item.current.highlighted {
+  background: rgba(100, 150, 255, 0.3);
+}
+
+.team-selector-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.team-selector-name {
+  flex: 1;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.team-selector-abbr {
+  color: rgba(150, 150, 170, 0.8);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.team-selector-empty {
+  padding: 20px;
+  text-align: center;
+  color: rgba(150, 150, 170, 0.6);
+  font-size: 14px;
+}
+
+.team-selector-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid rgba(100, 100, 120, 0.3);
+  font-size: 11px;
+  color: rgba(150, 150, 170, 0.6);
+}
+
+.team-selector-hint kbd {
+  background: rgba(100, 100, 120, 0.3);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 10px;
+  margin-right: 2px;
+}
+
+/* Scrollbar styling */
+.team-selector-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.team-selector-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.team-selector-list::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 120, 0.4);
+  border-radius: 4px;
+}
+
+.team-selector-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 120, 0.6);
+}
