@@ -1,27 +1,62 @@
 .scorebug {
   display: flex;
   flex-direction: column;
-  background: #0d0d0d;
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   font-family: "Segoe UI", "Roboto", "Arial", sans-serif;
-  width: 300px;
+  width: 340px;
 }
 
-/* ROW 1: Game Info (Quarter, Clock, Shot Clock) */
+/* Main Content Area: Logo - Center - Logo */
+.scorebug-main {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+/* Logo Sections (Left & Right) */
+.scorebug-logo-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: var(--team-primary);
+}
+
+.scorebug-logo-section.editable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.scorebug-logo-section.editable:hover {
+  filter: brightness(1.1);
+}
+
+.scorebug-team-logo {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Center Content: Game Info + Scores */
+.scorebug-center {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Game Info Bar - Compact, Top */
 .scorebug-game-info {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 4px 6px;
-  background: #2a2a2a;
+  gap: 4px;
+  padding: 4px 8px;
+  background: #1a1a1a;
 }
 
 .scorebug-quarter {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   color: #ffffff;
   text-transform: uppercase;
@@ -41,120 +76,72 @@
 }
 
 .scorebug-shot-clock {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
-/* ROW 2: Teams & Scores */
-.scorebug-scores-row {
+/* Scores Section */
+.scorebug-scores {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
-}
-
-/* Team Section (Away & Home) */
-.scorebug-team-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px;
   flex: 1;
-  background-color: var(--team-primary);
-}
-
-.scorebug-team-section--away {
-  justify-content: flex-start;
-}
-
-.scorebug-team-section--home {
-  justify-content: flex-end;
-}
-
-.scorebug-team-info {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0;
-  text-align: center;
-}
-
-/* Clickable team wrapper (logo + tricode) */
-.scorebug-team-clickable {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-  border-radius: 6px;
-  padding: 2px;
-  transition: all 0.2s ease;
-}
-
-.scorebug-team-clickable.editable {
-  cursor: pointer;
-}
-
-.scorebug-team-clickable.editable:hover {
-  background: rgba(255, 200, 50, 0.2);
-  outline: 2px solid rgba(255, 200, 50, 0.5);
-}
-
-.scorebug-team-logo {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  display: block;
-}
-
-.scorebug-team-abbr {
-  font-size: 11px;
-  font-weight: 800;
-  color: #ffffff;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  line-height: 1;
-}
-
-.scorebug-team-text {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-.scorebug-team-record {
-  font-size: 9px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
-  letter-spacing: 0.03em;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  line-height: 1;
-}
-
-/* Scores Center Section */
-.scorebug-scores-center {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: center;
-  gap: 0;
 }
 
 .scorebug-score {
-  font-size: 28px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
   font-weight: 800;
   color: #ffffff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   line-height: 1;
   font-variant-numeric: tabular-nums;
-  padding: 4px 8px;
+  padding: 8px 12px;
+  background-color: var(--team-primary);
+}
+
+/* Bottom Row: Team Names & Records */
+.scorebug-bottom {
+  display: flex;
+  flex-direction: row;
+  background: #1a1a1a;
+}
+
+.scorebug-team-info {
+  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: var(--team-primary);
+  gap: 6px;
+  padding: 6px 10px;
+}
+
+.scorebug-team-info--away {
+  justify-content: flex-start;
+}
+
+.scorebug-team-info--home {
+  justify-content: flex-end;
+}
+
+.scorebug-team-abbr {
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.scorebug-team-record {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1;
 }
 
 /* ======================= */
@@ -167,7 +154,7 @@
     0 4px 20px rgba(0, 0, 0, 0.5),
     0 0 30px rgba(255, 200, 50, 0.4),
     0 0 60px rgba(255, 200, 50, 0.2);
-  border: 2px solid rgba(255, 200, 50, 0.6);
+  outline: 2px solid rgba(255, 200, 50, 0.6);
   transition: all 0.3s ease;
 }
 
@@ -231,8 +218,8 @@
 
 /* Score input specific - wider for 3-digit numbers */
 .scorebug-score .editable-input {
-  width: 90px;
-  font-size: 28px;
+  width: 70px;
+  font-size: 36px;
   padding: 2px;
 }
 
@@ -246,13 +233,13 @@
 
 .scorebug-shot-clock.editable-input {
   width: 40px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /* Record input specific */
 .record-value.editable-input {
   width: 70px;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 /* Error states */

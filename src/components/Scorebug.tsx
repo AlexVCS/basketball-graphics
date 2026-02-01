@@ -213,106 +213,86 @@ export default function Scorebug({
     );
   };
 
-  // Render clickable team section (logo + tricode wrapper)
-  const renderTeamSection = (
-    teamField: "homeTeam" | "awayTeam",
-    team: typeof awayTeam,
-    logoUrl: string | undefined,
-    recordField: "homeRecord" | "awayRecord"
-  ) => {
-    const isAway = teamField === "awayTeam";
-    
-    return (
-      <div className="scorebug-team-info">
-        {/* Clickable wrapper for logo and tricode */}
-        <div
-          className={`scorebug-team-clickable ${isEditMode ? "editable" : ""}`}
-          onClick={() => handleTeamClick(teamField)}
-          title={isEditMode ? "Click to change team" : undefined}
-        >
-          {logoUrl ? (
-            <img
-              className="scorebug-team-logo"
-              src={logoUrl}
-              alt={`${team?.abbreviation ?? (isAway ? "AWY" : "HME")} logo`}
-            />
-          ) : null}
-          <span className={`scorebug-team-abbr ${isEditMode ? "editable-field team-field" : ""}`}>
-            {team?.abbreviation || (isAway ? "AWY" : "HME")}
-          </span>
-        </div>
-        <span className="scorebug-team-record">
-          {renderEditableField(recordField, data[recordField], "record-value")}
-        </span>
-      </div>
-    );
-  };
-
   return (
     <>
       <div
         ref={scorebugRef}
         className={`scorebug ${isEditMode ? "edit-mode" : ""}`}
       >
-        {/* ROW 1: Game Info */}
-        <div className="scorebug-game-info">
-          {renderEditableField("quarter", data.quarter, "scorebug-quarter", "select", VALID_QUARTERS)}
-          {renderEditableField("gameClock", data.gameClock, "scorebug-clock")}
-          {renderEditableField("shotClock", data.shotClock, "scorebug-shot-clock")}
+        {/* Main Content Area */}
+        <div className="scorebug-main">
+          {/* Away Team Logo - LEFT */}
+          <div
+            className={`scorebug-logo-section scorebug-logo-section--away ${isEditMode ? "editable" : ""}`}
+            style={{ "--team-primary": awayTeam?.primaryColor || "#333" } as React.CSSProperties}
+            onClick={() => handleTeamClick("awayTeam")}
+            title={isEditMode ? "Click to change team" : undefined}
+          >
+            {awayLogoUrl && (
+              <img
+                className="scorebug-team-logo"
+                src={awayLogoUrl}
+                alt={`${awayTeam?.abbreviation ?? "AWY"} logo`}
+              />
+            )}
+          </div>
+
+          {/* Center Content: Game Info + Scores */}
+          <div className="scorebug-center">
+            {/* Game Info Bar - Compact, Top Center */}
+            <div className="scorebug-game-info">
+              {renderEditableField("quarter", data.quarter, "scorebug-quarter", "select", VALID_QUARTERS)}
+              {renderEditableField("gameClock", data.gameClock, "scorebug-clock")}
+              {renderEditableField("shotClock", data.shotClock, "scorebug-shot-clock")}
+            </div>
+
+            {/* Scores */}
+            <div className="scorebug-scores">
+              <div
+                className="scorebug-score scorebug-score--away"
+                style={{ "--team-primary": awayTeam?.primaryColor || "#333" } as React.CSSProperties}
+              >
+                {renderEditableField("awayScore", data.awayScore, "score-value", "number")}
+              </div>
+              <div
+                className="scorebug-score scorebug-score--home"
+                style={{ "--team-primary": homeTeam?.primaryColor || "#333" } as React.CSSProperties}
+              >
+                {renderEditableField("homeScore", data.homeScore, "score-value", "number")}
+              </div>
+            </div>
+          </div>
+
+          {/* Home Team Logo - RIGHT */}
+          <div
+            className={`scorebug-logo-section scorebug-logo-section--home ${isEditMode ? "editable" : ""}`}
+            style={{ "--team-primary": homeTeam?.primaryColor || "#333" } as React.CSSProperties}
+            onClick={() => handleTeamClick("homeTeam")}
+            title={isEditMode ? "Click to change team" : undefined}
+          >
+            {homeLogoUrl && (
+              <img
+                className="scorebug-team-logo"
+                src={homeLogoUrl}
+                alt={`${homeTeam?.abbreviation ?? "HME"} logo`}
+              />
+            )}
+          </div>
         </div>
 
-        {/* ROW 2: Teams & Scores */}
-        <div className="scorebug-scores-row">
-          {/* Away Team Info - LEFT */}
-          <div
-            className="scorebug-team-section scorebug-team-section--away"
-            style={
-              {
-                "--team-primary": awayTeam?.primaryColor || "#333",
-                "--team-secondary": awayTeam?.secondaryColor || "#fff",
-              } as React.CSSProperties
-            }
-          >
-            {renderTeamSection("awayTeam", awayTeam, awayLogoUrl, "awayRecord")}
+        {/* Bottom Row: Team Names & Records */}
+        <div className="scorebug-bottom">
+          <div className="scorebug-team-info scorebug-team-info--away">
+            <span className="scorebug-team-abbr">{awayTeam?.abbreviation || "AWY"}</span>
+            <span className="scorebug-team-record">
+              {renderEditableField("awayRecord", data.awayRecord, "record-value")}
+            </span>
           </div>
-
-          {/* Scores - CENTER */}
-          <div className="scorebug-scores-center">
-            <div
-              className="scorebug-score scorebug-score--away"
-              style={
-                {
-                  "--team-primary": awayTeam?.primaryColor || "#333",
-                  "--team-secondary": awayTeam?.secondaryColor || "#fff",
-                } as React.CSSProperties
-              }
-            >
-              {renderEditableField("awayScore", data.awayScore, "score-value", "number")}
-            </div>
-            <div
-              className="scorebug-score scorebug-score--home"
-              style={
-                {
-                  "--team-primary": homeTeam?.primaryColor || "#333",
-                  "--team-secondary": homeTeam?.secondaryColor || "#fff",
-                } as React.CSSProperties
-              }
-            >
-              {renderEditableField("homeScore", data.homeScore, "score-value", "number")}
-            </div>
-          </div>
-
-          {/* Home Team Info - RIGHT */}
-          <div
-            className="scorebug-team-section scorebug-team-section--home"
-            style={
-              {
-                "--team-primary": homeTeam?.primaryColor || "#333",
-                "--team-secondary": homeTeam?.secondaryColor || "#fff",
-              } as React.CSSProperties
-            }
-          >
-            {renderTeamSection("homeTeam", homeTeam, homeLogoUrl, "homeRecord")}
+          <div className="scorebug-team-info scorebug-team-info--home">
+            <span className="scorebug-team-abbr">{homeTeam?.abbreviation || "HME"}</span>
+            <span className="scorebug-team-record">
+              {renderEditableField("homeRecord", data.homeRecord, "record-value")}
+            </span>
           </div>
         </div>
       </div>
