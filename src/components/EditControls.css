@@ -26,6 +26,18 @@
     0 4px 20px rgba(255, 200, 50, 0.3);
 }
 
+/* Demo mode styling - blue/purple glow */
+.edit-controls-bar.demo-mode {
+  border-bottom: 2px solid rgba(138, 43, 226, 0.8);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 4px 20px rgba(138, 43, 226, 0.3);
+}
+
+.demo-mode .edit-controls-mode {
+  color: rgba(180, 120, 255, 1);
+}
+
 /* Centered content container */
 .edit-controls-content {
   max-width: 1200px;
@@ -130,6 +142,28 @@
 .cancel-btn:hover {
   background: linear-gradient(135deg, #777, #666);
   box-shadow: 0 4px 15px rgba(100, 100, 100, 0.3);
+}
+
+/* Demo button */
+.demo-btn {
+  background: linear-gradient(135deg, #8a2be2, #6a1bb2);
+  color: white;
+}
+
+.demo-btn:hover {
+  background: linear-gradient(135deg, #9a3bf2, #7a2bc2);
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+}
+
+/* Exit Demo button */
+.exit-demo-btn {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+}
+
+.exit-demo-btn:hover {
+  background: linear-gradient(135deg, #f15c4c, #d0493b);
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
 }
 
 /* Keyboard shortcut badges */

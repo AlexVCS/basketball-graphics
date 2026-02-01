@@ -1,21 +1,30 @@
 import { useEffect } from "react";
+import type { ViewMode } from "./GraphicsLayout";
 import "./EditControls.css";
 
 interface EditControlsProps {
-  isEditMode: boolean;
+  viewMode: ViewMode;
   hasErrors: boolean;
   onToggleEdit: () => void;
   onSave: () => void;
   onCancel: () => void;
+  onEnterDemo: () => void;
+  onExitDemo: () => void;
 }
 
 export default function EditControls({
-  isEditMode,
+  viewMode,
   hasErrors,
   onToggleEdit,
   onSave,
   onCancel,
+  onEnterDemo,
+  onExitDemo,
 }: EditControlsProps) {
+  const isEditMode = viewMode === "edit";
+  const isDemoMode = viewMode === "demo";
+  const isViewMode = viewMode === "view";
+
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -26,17 +35,29 @@ export default function EditControls({
         e.target instanceof HTMLSelectElement
       ) {
         // Allow Escape to still work
-        if (e.key === "Escape" && isEditMode) {
+        if (e.key === "Escape") {
           e.preventDefault();
-          onCancel();
+          if (isEditMode) {
+            onCancel();
+          } else if (isDemoMode) {
+            onExitDemo();
+          }
         }
         return;
       }
 
       switch (e.key.toLowerCase()) {
         case "e":
-          e.preventDefault();
-          onToggleEdit();
+          if (isViewMode) {
+            e.preventDefault();
+            onToggleEdit();
+          }
+          break;
+        case "d":
+          if (isViewMode) {
+            e.preventDefault();
+            onEnterDemo();
+          }
           break;
         case "s":
           if (isEditMode) {
@@ -45,9 +66,11 @@ export default function EditControls({
           }
           break;
         case "escape":
+          e.preventDefault();
           if (isEditMode) {
-            e.preventDefault();
             onCancel();
+          } else if (isDemoMode) {
+            onExitDemo();
           }
           break;
       }
@@ -55,26 +78,39 @@ export default function EditControls({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isEditMode, onToggleEdit, onSave, onCancel]);
+  }, [viewMode, isEditMode, isDemoMode, isViewMode, onToggleEdit, onSave, onCancel, onEnterDemo, onExitDemo]);
+
+  const getModeClass = () => {
+    if (isEditMode) return "edit-mode";
+    if (isDemoMode) return "demo-mode";
+    return "view-mode";
+  };
 
   return (
-    <header className={`edit-controls-bar ${isEditMode ? "edit-mode" : "view-mode"}`}>
+    <header className={`edit-controls-bar ${getModeClass()}`}>
       <div className="edit-controls-content">
         {/* Mode Indicator */}
         <div className="edit-controls-mode">
-          {isEditMode ? (
+          {isEditMode && (
             <>
               <span className="mode-icon">&#9998;</span>
               <span className="mode-text">EDIT MODE</span>
             </>
-          ) : (
+          )}
+          {isDemoMode && (
+            <>
+              <span className="mode-icon">&#9654;</span>
+              <span className="mode-text">DEMO MODE</span>
+            </>
+          )}
+          {isViewMode && (
             <span className="mode-text">VIEW MODE</span>
           )}
         </div>
 
         {/* Buttons */}
         <div className="edit-controls-buttons">
-          {isEditMode ? (
+          {isEditMode && (
             <>
               <button
                 className="edit-control-btn save-btn"
@@ -96,29 +132,61 @@ export default function EditControls({
                 <kbd>Esc</kbd>
               </button>
             </>
-          ) : (
+          )}
+          
+          {isDemoMode && (
             <button
-              className="edit-control-btn edit-btn"
-              onClick={onToggleEdit}
-              title="Enter edit mode (E)"
+              className="edit-control-btn exit-demo-btn"
+              onClick={onExitDemo}
+              title="Exit demo mode (Esc)"
             >
-              <span className="btn-icon">&#9998;</span>
-              Edit
-              <kbd>E</kbd>
+              <span className="btn-icon">&#10005;</span>
+              Exit Demo
+              <kbd>Esc</kbd>
             </button>
+          )}
+          
+          {isViewMode && (
+            <>
+              <button
+                className="edit-control-btn edit-btn"
+                onClick={onToggleEdit}
+                title="Enter edit mode (E)"
+              >
+                <span className="btn-icon">&#9998;</span>
+                Edit
+                <kbd>E</kbd>
+              </button>
+              <button
+                className="edit-control-btn demo-btn"
+                onClick={onEnterDemo}
+                title="Enter demo mode (D)"
+              >
+                <span className="btn-icon">&#9654;</span>
+                Demo
+                <kbd>D</kbd>
+              </button>
+            </>
           )}
         </div>
 
         {/* Keyboard shortcuts legend */}
         <div className="edit-controls-shortcuts">
           <span className="shortcut-label">Shortcuts:</span>
-          {isEditMode ? (
+          {isEditMode && (
             <>
               <span className="shortcut"><kbd>S</kbd> Save</span>
               <span className="shortcut"><kbd>Esc</kbd> Cancel</span>
             </>
-          ) : (
-            <span className="shortcut"><kbd>E</kbd> Edit</span>
+          )}
+          {isDemoMode && (
+            <span className="shortcut"><kbd>Esc</kbd> Exit</span>
+          )}
+          {isViewMode && (
+            <>
+              <span className="shortcut"><kbd>E</kbd> Edit</span>
+              <span className="shortcut"><kbd>D</kbd> Demo</span>
+            </>
           )}
         </div>
       </div>

@@ -2,6 +2,8 @@ import { useState, useCallback } from "react";
 import "../styles/graphicsLayout.css";
 import PreviewPanel from "./PreviewPanel";
 import EditControls from "./EditControls";
+import DemoPlayground from "./DemoPlayground";
+import { CELTICS_VS_BULLS_DEMO } from "../data/demoScenarios";
 import type { ScoreboardData, ValidationErrors, ScoreboardField } from "../types/scorebug";
 import {
   validateShotClock,
@@ -11,6 +13,8 @@ import {
   validateScore,
   validateRecord,
 } from "../utils/validationUtils";
+
+export type ViewMode = "view" | "edit" | "demo";
 
 export default function GraphicsLayout() {
   // Saved values (displayed in view mode)
@@ -29,9 +33,21 @@ export default function GraphicsLayout() {
   // Draft values (editable in edit mode)
   const [draftScoreboard, setDraftScoreboard] = useState<ScoreboardData>(savedScoreboard);
   
-  // Edit mode state
-  const [isEditMode, setIsEditMode] = useState(false);
+  // Demo scoreboard (live updates during demo)
+  const [demoScoreboard, setDemoScoreboard] = useState<ScoreboardData>(
+    CELTICS_VS_BULLS_DEMO.initialScoreboard
+  );
+  
+  // Pre-demo saved state (to restore when exiting demo)
+  const [preDemoScoreboard, setPreDemoScoreboard] = useState<ScoreboardData | null>(null);
+  
+  // View mode state: "view" | "edit" | "demo"
+  const [viewMode, setViewMode] = useState<ViewMode>("view");
   const [errors, setErrors] = useState<ValidationErrors>({});
+
+  // Derived states
+  const isEditMode = viewMode === "edit";
+  const isDemoMode = viewMode === "demo";
 
   // Validate a single field
   const validateField = useCallback((field: ScoreboardField, value: string | number): string | undefined => {
@@ -106,18 +122,19 @@ export default function GraphicsLayout() {
       // If exiting edit mode without saving, revert to saved values
       setDraftScoreboard(savedScoreboard);
       setErrors({});
+      setViewMode("view");
     } else {
       // Entering edit mode, copy saved to draft
       setDraftScoreboard(savedScoreboard);
+      setViewMode("edit");
     }
-    setIsEditMode((prev) => !prev);
   }, [isEditMode, savedScoreboard]);
 
   // Save changes
   const handleSave = useCallback(() => {
     if (validateAll()) {
       setSavedScoreboard(draftScoreboard);
-      setIsEditMode(false);
+      setViewMode("view");
       setErrors({});
     }
   }, [draftScoreboard, validateAll]);
@@ -126,8 +143,32 @@ export default function GraphicsLayout() {
   const handleCancel = useCallback(() => {
     setDraftScoreboard(savedScoreboard);
     setErrors({});
-    setIsEditMode(false);
+    setViewMode("view");
   }, [savedScoreboard]);
+
+  // Enter demo mode
+  const handleEnterDemo = useCallback(() => {
+    // Save current state to restore later
+    setPreDemoScoreboard(savedScoreboard);
+    // Initialize demo scoreboard
+    setDemoScoreboard(CELTICS_VS_BULLS_DEMO.initialScoreboard);
+    setViewMode("demo");
+  }, [savedScoreboard]);
+
+  // Exit demo mode
+  const handleExitDemo = useCallback(() => {
+    // Restore pre-demo state
+    if (preDemoScoreboard) {
+      setSavedScoreboard(preDemoScoreboard);
+    }
+    setPreDemoScoreboard(null);
+    setViewMode("view");
+  }, [preDemoScoreboard]);
+
+  // Update demo scoreboard (called by DemoPlayground)
+  const handleDemoScoreboardUpdate = useCallback((scoreboard: ScoreboardData) => {
+    setDemoScoreboard(scoreboard);
+  }, []);
 
   // Check if there are any errors
   const hasErrors = Object.values(errors).some((error) => !!error);
@@ -146,21 +187,35 @@ export default function GraphicsLayout() {
       </div>
 
       <div className="graphics-layout graphics-layout--preview-only">
-        <PreviewPanel
-          scoreboard={displayData}
-          isEditMode={isEditMode}
-          errors={errors}
-          onFieldChange={handleFieldChange}
-        />
+        {isDemoMode ? (
+          <section className="preview-panel">
+            <div className="preview-aspect">
+              <DemoPlayground
+                scenario={CELTICS_VS_BULLS_DEMO}
+                scoreboard={demoScoreboard}
+                onScoreboardUpdate={handleDemoScoreboardUpdate}
+              />
+            </div>
+          </section>
+        ) : (
+          <PreviewPanel
+            scoreboard={displayData}
+            isEditMode={isEditMode}
+            errors={errors}
+            onFieldChange={handleFieldChange}
+          />
+        )}
       </div>
 
       {/* Floating Edit Controls */}
       <EditControls
-        isEditMode={isEditMode}
+        viewMode={viewMode}
         hasErrors={hasErrors}
         onToggleEdit={handleToggleEdit}
         onSave={handleSave}
         onCancel={handleCancel}
+        onEnterDemo={handleEnterDemo}
+        onExitDemo={handleExitDemo}
       />
     </>
   );
