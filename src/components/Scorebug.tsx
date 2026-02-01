@@ -239,14 +239,7 @@ export default function Scorebug({
 
           {/* Center Content: Game Info + Scores */}
           <div className="scorebug-center">
-            {/* Game Info Bar - Compact, Top Center */}
-            <div className="scorebug-game-info">
-              {renderEditableField("quarter", data.quarter, "scorebug-quarter", "select", VALID_QUARTERS)}
-              {renderEditableField("gameClock", data.gameClock, "scorebug-clock")}
-              {renderEditableField("shotClock", data.shotClock, "scorebug-shot-clock")}
-            </div>
-
-            {/* Scores */}
+            {/* Scores - Full area with team colors */}
             <div className="scorebug-scores">
               <div
                 className="scorebug-score scorebug-score--away"
@@ -260,6 +253,13 @@ export default function Scorebug({
               >
                 {renderEditableField("homeScore", data.homeScore, "score-value", "number")}
               </div>
+            </div>
+
+            {/* Game Info Bar - Compact, Floating on top */}
+            <div className="scorebug-game-info">
+              {renderEditableField("quarter", data.quarter, "scorebug-quarter", "select", VALID_QUARTERS)}
+              {renderEditableField("gameClock", data.gameClock, "scorebug-clock")}
+              {renderEditableField("shotClock", data.shotClock, "scorebug-shot-clock")}
             </div>
           </div>
 

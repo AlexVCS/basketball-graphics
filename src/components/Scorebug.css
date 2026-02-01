@@ -42,17 +42,23 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  position: relative;
 }
 
-/* Game Info Bar - Compact, Top */
+/* Game Info Bar - Compact, Floating on top */
 .scorebug-game-info {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 4px 8px;
+  padding: 4px 6px;
   background: #1a1a1a;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 
 .scorebug-quarter {
@@ -83,17 +89,19 @@
   line-height: 1;
 }
 
-/* Scores Section */
+/* Scores Section - Full height with team colors */
 .scorebug-scores {
   display: flex;
   flex-direction: row;
   flex: 1;
+  width: 100%;
+  min-height: 70px;
 }
 
 .scorebug-score {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   font-size: 36px;
   font-weight: 800;
@@ -101,7 +109,7 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   line-height: 1;
   font-variant-numeric: tabular-nums;
-  padding: 8px 12px;
+  padding: 8px 12px 4px;
   background-color: var(--team-primary);
 }
 
