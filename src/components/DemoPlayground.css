@@ -1,0 +1,181 @@
+.demo-playground {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+}
+
+/* Video fills container */
+.demo-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+  cursor: pointer;
+}
+
+/* Scorebug overlay positioned at bottom center - matches edit mode exactly */
+.demo-scorebug-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.demo-scorebug-overlay .scorebug {
+  pointer-events: auto;
+}
+
+/* Video Controls */
+.demo-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.demo-play-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.demo-play-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.demo-play-btn:active {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Timeline */
+.demo-timeline {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.demo-time {
+  font-family: "SF Mono", Monaco, Consolas, monospace;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  min-width: 40px;
+}
+
+.demo-seek {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.demo-seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.demo-seek::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.demo-seek::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  border: none;
+}
+
+/* Play overlay for initial state */
+.demo-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.demo-play-overlay-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 6px; /* Visual centering for play icon */
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.demo-play-overlay:hover .demo-play-overlay-btn {
+  transform: scale(1.1);
+  background: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .demo-scorebug-overlay {
+    padding: 10px;
+  }
+  
+  .demo-controls {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  
+  .demo-play-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+  
+  .demo-time {
+    font-size: 11px;
+    min-width: 35px;
+  }
+  
+  .demo-play-overlay-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+  }
+}
