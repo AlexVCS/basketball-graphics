@@ -6,7 +6,7 @@
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   font-family: "Segoe UI", "Roboto", "Arial", sans-serif;
-  width: 380px;
+  width: 300px;
 }
 
 /* ROW 1: Game Info (Quarter, Clock, Shot Clock) */
@@ -16,12 +16,12 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 2px 8px;
+  padding: 4px 6px;
   background: #2a2a2a;
 }
 
 .scorebug-quarter {
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 700;
   color: #ffffff;
   text-transform: uppercase;
@@ -32,13 +32,16 @@
 .scorebug-clock {
   font-size: 16px;
   font-weight: 700;
-  color: #ffffff;
+  color: #1a1a1a;
+  background: #e8e8e8;
+  padding: 2px 8px;
+  border-radius: 2px;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
 .scorebug-shot-clock {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
   font-variant-numeric: tabular-nums;
@@ -57,7 +60,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 6px;
+  padding: 2px;
   flex: 1;
   background-color: var(--team-primary);
 }
@@ -77,6 +80,26 @@
   justify-content: center;
   gap: 0;
   text-align: center;
+}
+
+/* Clickable team wrapper (logo + tricode) */
+.scorebug-team-clickable {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  border-radius: 6px;
+  padding: 2px;
+  transition: all 0.2s ease;
+}
+
+.scorebug-team-clickable.editable {
+  cursor: pointer;
+}
+
+.scorebug-team-clickable.editable:hover {
+  background: rgba(255, 200, 50, 0.2);
+  outline: 2px solid rgba(255, 200, 50, 0.5);
 }
 
 .scorebug-team-logo {
@@ -132,4 +155,146 @@
   align-items: center;
   justify-content: center;
   background-color: var(--team-primary);
+}
+
+/* ======================= */
+/* EDIT MODE STYLES        */
+/* ======================= */
+
+/* Edit mode glow effect on scorebug */
+.scorebug.edit-mode {
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(255, 200, 50, 0.4),
+    0 0 60px rgba(255, 200, 50, 0.2);
+  border: 2px solid rgba(255, 200, 50, 0.6);
+  transition: all 0.3s ease;
+}
+
+/* Editable field wrapper */
+.editable-wrapper {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Base editable field styles */
+.editable-field {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  position: relative;
+}
+
+/* Hover state for editable fields in edit mode */
+.scorebug.edit-mode .editable-field:hover {
+  background: rgba(255, 200, 50, 0.2);
+  outline: 2px solid rgba(255, 200, 50, 0.5);
+}
+
+/* Team field specific styles */
+.editable-field.team-field {
+  padding: 2px 6px;
+}
+
+/* Editable input styles */
+.editable-input {
+  background: rgba(0, 0, 0, 0.6) !important;
+  border: 2px solid rgba(255, 200, 50, 0.8) !important;
+  outline: none !important;
+  text-align: center;
+  font-family: inherit;
+  font-weight: inherit;
+  color: #ffffff !important;
+}
+
+/* Quarter select dropdown */
+.editable-select {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 2px solid rgba(255, 200, 50, 0.8) !important;
+  outline: none !important;
+  cursor: pointer;
+  padding: 2px 4px;
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  color: #ffffff !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.editable-select option {
+  background: #1a1a1a;
+  color: white;
+}
+
+/* Score input specific - wider for 3-digit numbers */
+.scorebug-score .editable-input {
+  width: 90px;
+  font-size: 28px;
+  padding: 2px;
+}
+
+/* Clock input specific */
+.scorebug-clock.editable-input {
+  width: 60px;
+  font-size: 16px;
+  background: #e8e8e8 !important;
+  color: #1a1a1a !important;
+}
+
+.scorebug-shot-clock.editable-input {
+  width: 40px;
+  font-size: 16px;
+}
+
+/* Record input specific */
+.record-value.editable-input {
+  width: 70px;
+  font-size: 9px;
+}
+
+/* Error states */
+.editable-wrapper.has-error .editable-field,
+.editable-field.has-error {
+  outline: 2px solid #ff4444 !important;
+  background: rgba(255, 68, 68, 0.15) !important;
+}
+
+.field-error {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 68, 68, 0.95);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 100;
+  margin-top: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.field-error::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom-color: rgba(255, 68, 68, 0.95);
+}
+
+/* Score value display */
+.score-value {
+  display: inline-block;
+}
+
+/* Record value display */
+.record-value {
+  display: inline;
 }
