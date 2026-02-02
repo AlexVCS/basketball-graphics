@@ -149,9 +149,9 @@ export function validateScore(value: number | string): ValidationResult {
 }
 
 /**
- * Validates team record format (XX-XX) where wins + losses = 82
- * Format: (XX-XX) - opening paren, 2-digit wins, hyphen, 2-digit losses, closing paren
- * Example: (41-41), (50-32), (00-82)
+ * Validates team record format where wins + losses <= 82
+ * Format: (X-X) or (XX-XX) - opening paren, 1-2 digit wins, hyphen, 1-2 digit losses, closing paren
+ * Example: (0-0), (2-1), (00-00), (02-01), (41-41), (50-32)
  */
 export function validateRecord(value: string): ValidationResult {
   // Check for any letters - reject immediately
@@ -159,22 +159,22 @@ export function validateRecord(value: string): ValidationResult {
     return { valid: false, error: "No letters allowed" };
   }
 
-  // Check format: must be (XX-XX) with exactly 2 digits on each side
-  const formatRegex = /^\(\d{2}-\d{2}\)$/;
+  // Check format: must be (X-X) or (XX-XX) with 1-2 digits on each side
+  const formatRegex = /^\(\d{1,2}-\d{1,2}\)$/;
   
   if (!formatRegex.test(value)) {
     return { 
       valid: false, 
-      error: "Format: (XX-XX)" 
+      error: "Format: (X-X) or (XX-XX)" 
     };
   }
   
   // Extract wins and losses
-  const match = value.match(/^\((\d{2})-(\d{2})\)$/);
+  const match = value.match(/^\((\d{1,2})-(\d{1,2})\)$/);
   if (!match) {
     return { 
       valid: false, 
-      error: "Format: (XX-XX)" 
+      error: "Format: (X-X) or (XX-XX)" 
     };
   }
   
@@ -182,11 +182,11 @@ export function validateRecord(value: string): ValidationResult {
   const losses = parseInt(match[2], 10);
   const total = wins + losses;
   
-  // Check that wins + losses = 82 (NBA season games)
-  if (total !== 82) {
+  // Check that wins + losses <= 82 (NBA season games)
+  if (total > 82) {
     return { 
       valid: false, 
-      error: `W+L must equal 82 (currently ${total})` 
+      error: `W+L cannot exceed 82 (currently ${total})` 
     };
   }
   

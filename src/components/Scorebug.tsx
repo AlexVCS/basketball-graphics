@@ -208,7 +208,10 @@ export default function Scorebug({
             {displayValue}
           </span>
         )}
-        {hasError && <span className="field-error">{fieldError}</span>}
+        {/* Only show inline error for non-record fields (records use RecordErrorTooltip) */}
+        {hasError && field !== "homeRecord" && field !== "awayRecord" && (
+          <span className="field-error">{fieldError}</span>
+        )}
       </div>
     );
   };
