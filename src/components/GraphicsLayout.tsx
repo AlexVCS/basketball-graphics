@@ -12,6 +12,7 @@ import {
   validateTeam,
   validateScore,
   validateRecord,
+  formatGameClock,
 } from "../utils/validationUtils";
 
 export type ViewMode = "view" | "edit" | "demo";
@@ -133,7 +134,12 @@ export default function GraphicsLayout() {
   // Save changes
   const handleSave = useCallback(() => {
     if (validateAll()) {
-      setSavedScoreboard(draftScoreboard);
+      // Format game clock before saving (e.g., "5" → "5:00", "5:1" → "5:10")
+      const formattedScoreboard = {
+        ...draftScoreboard,
+        gameClock: formatGameClock(draftScoreboard.gameClock),
+      };
+      setSavedScoreboard(formattedScoreboard);
       setViewMode("view");
       setErrors({});
     }
