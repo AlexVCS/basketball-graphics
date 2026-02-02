@@ -1,73 +1,224 @@
-# React + TypeScript + Vite
+<a id="top"></a>
+<div align="center">
+  <h1>🏀 Basketball Graphics</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  <p align="center">
+    Interactive NBA scorebug editor with real-time validation and demo playback
+    <br />
+    <a href="https://dev-basketball-graphics.apps.gaspar.ontampa.dev/">View Live Demo</a>
+    ·
+    <a href="https://github.com/AlexVCS/basketball-graphics/issues">Report Bug</a>
+  </p>
+</div>
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[About](#about) |
+[Screenshots](#screenshots) |
+[Key Features](#key-features) |
+[Built With](#built-with) |
+[Local Project Setup](#local-project-setup) |
+[Running the Project](#running-the-project) |
+[Project Structure](#project-structure) |
+[Contact](#contact)
 
-## React Compiler
+## About
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Basketball Graphics is a web-based scorebug editor designed for NBA game graphics. It provides an interactive interface for managing and displaying real-time game information including scores, team data, game clock, shot clock, and quarter information.
 
-## Expanding the ESLint configuration
+The application features three distinct modes:
+- **View Mode**: Display the current scorebug state
+- **Edit Mode**: Modify all scorebug fields with real-time validation
+- **Demo Mode**: Watch synchronized video playback with live scorebug updates
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Perfect for graphics operators, broadcast professionals, or developers building sports visualization tools.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+<div align='right'>
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+[Back to Top](#top)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+</div>
+
+## Screenshots
+
+<p align="middle">
+  <img src="./public/scorebug-screenshot.png" width="400" hspace="10" />
+  <img src="./public/demo-screenshot.png" width="400" hspace="10" />
+</p>
+
+<div align='right'>
+
+[Back to Top](#top)
+
+</div>
+
+## Key Features
+
+### 🎛️ Edit Mode
+- Click any field on the scorebug to edit inline
+- Team selection dropdown with search functionality
+- Quarter selection dropdown
+- Inline score, clock, and record editing
+
+### ✅ Real-Time Validation
+- **Game Clock**: MM:SS format, max 12:00
+- **Shot Clock**: 0-24 seconds
+- **Scores**: 0-999 range
+- **Quarters**: 1st, 2nd, 3rd, 4th, OT, OT1-OT5
+
+### 🎬 Demo Playback
+- Synchronized video playback with scorebug updates
+- Game clock countdown synced to video timeline
+- Score updates triggered at specific video timestamps
+- Play/pause and seek controls
+
+### 🏀 NBA Team Integration
+- All 30 NBA teams included
+- Official team colors and logos
+- Searchable team selector with keyboard navigation
+
+### ⌨️ Keyboard Shortcuts
+| Key | Action |
+|-----|--------|
+| `E` | Enter Edit Mode |
+| `D` | Enter Demo Mode |
+| `S` | Save Changes (in Edit Mode) |
+| `Esc` | Cancel/Exit Current Mode |
+
+<div align='right'>
+
+[Back to Top](#top)
+
+</div>
+
+## Built With
+
+[![React][React-shield]][React-url]
+[![TypeScript][TypeScript-shield]][TypeScript-url]
+[![Vite][Vite-shield]][Vite-url]
+[![ESLint][ESLint-shield]][ESLint-url]
+
+<div align='right'>
+
+[Back to Top](#top)
+
+</div>
+
+## Local Project Setup
+
+Git and Node.js are required to run this project locally.
+
+### Clone the repo
+
+```bash
+git clone https://github.com/AlexVCS/basketball-graphics.git
+cd basketball-graphics
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+No environment variables are required for local development.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+<div align='right'>
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+[Back to Top](#top)
+
+</div>
+
+## Running the Project
+
+### Development
+
+Start the development server with hot module replacement:
+
+```bash
+npm run dev
 ```
+
+The app will be available at `http://localhost:5173`
+
+### Production Build
+
+Build the project for production:
+
+```bash
+npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run preview
+```
+
+### Linting
+
+Run ESLint to check for code issues:
+
+```bash
+npm run lint
+```
+
+<div align='right'>
+
+[Back to Top](#top)
+
+</div>
+
+## Project Structure
+
+```
+src/
+├── components/         # React components
+│   ├── Scorebug.tsx   # Main scorebug display
+│   ├── EditControls.tsx # Mode switching controls
+│   ├── GraphicsLayout.tsx # Main layout and state
+│   ├── TeamSelector.tsx # Team dropdown selector
+│   └── DemoPlayground.tsx # Video playback component
+├── hooks/             # Custom React hooks
+│   └── useDemoPlayback.ts # Video sync hook
+├── types/             # TypeScript definitions
+│   └── scorebug.ts    # Core interfaces
+├── data/              # Static data
+│   ├── nbaTeams.ts    # NBA team information
+│   └── demoScenarios.ts # Demo configurations
+├── utils/             # Utility functions
+│   └── validationUtils.ts # Field validation
+└── styles/            # Global styles
+```
+
+<div align='right'>
+
+[Back to Top](#top)
+
+</div>
+
+## Contact
+
+<div align='center'>
+Alex Curtis-Slep
+
+[![LinkedIn-shield]][alex-linkedin-url][![GitHub-shield]][alex-github-url]
+
+</div>
+
+<div align='right'>
+
+[Back to Top](#top)
+
+</div>
+
+<!-- Personal Links -->
+[alex-linkedin-url]: https://www.linkedin.com/in/alexcurtisslep/
+[alex-github-url]: https://github.com/AlexVCS
+[GitHub-shield]: https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white
+[LinkedIn-shield]: https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white
+
+<!-- Technology Shields -->
+[React-shield]: https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black
+[React-url]: https://react.dev/
+[TypeScript-shield]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org/
+[Vite-shield]: https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white
+[Vite-url]: https://vite.dev/
+[ESLint-shield]: https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white
+[ESLint-url]: https://eslint.org/
