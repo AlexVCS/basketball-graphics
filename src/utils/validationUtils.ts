@@ -41,9 +41,9 @@ export function validateShotClock(value: string): ValidationResult {
 
 /**
  * Validates game clock value
- * Must be MM:SS format, max 12:00
+ * Accepts formats: "12:00", "5:42", "0:30", ":30", "12", "5", "0", "5:1" (becomes 5:10)
+ * Max 12:00
  * Only allows digits and colons - no letters
- * Accepts formats: "12:00", "5:42", "0:30", ":30"
  */
 export function validateGameClock(value: string): ValidationResult {
   // Check for any letters - reject immediately
@@ -51,33 +51,38 @@ export function validateGameClock(value: string): ValidationResult {
     return { valid: false, error: "Game clock cannot contain letters" };
   }
   
-  // Handle ":SS" format (no minutes)
-  if (value.startsWith(":")) {
-    if (!/^:\d{1,2}$/.test(value)) {
-      return { valid: false, error: "Game clock format: MM:SS" };
-    }
-    const seconds = parseInt(value.slice(1), 10);
-    if (isNaN(seconds) || seconds < 0 || seconds > 59) {
-      return { valid: false, error: "Seconds must be 0-59" };
-    }
-    return { valid: true };
+  let minutes = 0;
+  let seconds = 0;
+  
+  // Case 1: Just a number (0, 5, 12, etc.) - treat as minutes
+  if (/^\d{1,2}$/.test(value)) {
+    minutes = parseInt(value, 10);
+    seconds = 0;
+  }
+  // Case 2: :SS format (:30, :05, etc.)
+  else if (/^:\d{1,2}$/.test(value)) {
+    minutes = 0;
+    seconds = parseInt(value.slice(1), 10);
+  }
+  // Case 3: MM:S format (5:4 becomes 5:40)
+  else if (/^\d{1,2}:\d$/.test(value)) {
+    const parts = value.split(":");
+    minutes = parseInt(parts[0], 10);
+    seconds = parseInt(parts[1], 10) * 10; // 5:1 → 5:10
+  }
+  // Case 4: MM:SS format (5:42, 12:00, etc.)
+  else if (/^\d{1,2}:\d{2}$/.test(value)) {
+    const parts = value.split(":");
+    minutes = parseInt(parts[0], 10);
+    seconds = parseInt(parts[1], 10);
+  }
+  // Case 5: Invalid format
+  else {
+    return { valid: false, error: "Enter MM:SS like '5:42' or just '5' for 5:00" };
   }
   
-  // Handle "MM:SS" format
-  const match = value.match(/^(\d{1,2}):(\d{2})$/);
-  
-  if (!match) {
-    return { valid: false, error: "Game clock must be in MM:SS format" };
-  }
-  
-  const minutes = parseInt(match[1], 10);
-  const seconds = parseInt(match[2], 10);
-  
-  if (minutes > 12) {
-    return { valid: false, error: "Game clock cannot exceed 12:00" };
-  }
-  
-  if (minutes === 12 && seconds > 0) {
+  // Validate ranges
+  if (minutes > 12 || (minutes === 12 && seconds > 0)) {
     return { valid: false, error: "Game clock cannot exceed 12:00" };
   }
   
@@ -203,17 +208,31 @@ export function formatShotClock(value: string): string {
 
 /**
  * Format game clock for display
+ * Handles conversions: "5" → "5:00", "5:1" → "5:10", ":30" → "0:30"
  */
 export function formatGameClock(value: string): string {
-  // Already in correct format
+  // Already in correct MM:SS format
   if (value.match(/^\d{1,2}:\d{2}$/)) {
     return value;
   }
   
-  // Handle ":SS" format
-  if (value.startsWith(":")) {
-    return `0${value}`;
+  // Just a number (5 or 12) → convert to MM:00
+  if (/^\d{1,2}$/.test(value)) {
+    return `${value}:00`;
   }
   
-  return "12:00";
+  // :SS format (":30") → convert to 0:SS
+  if (/^:\d{1,2}$/.test(value)) {
+    const seconds = parseInt(value.slice(1), 10);
+    return `0:${seconds.toString().padStart(2, "0")}`;
+  }
+  
+  // Partial seconds (5:4 or 5:1) → convert to 5:40 or 5:10
+  if (/^\d{1,2}:\d$/.test(value)) {
+    const parts = value.split(":");
+    const seconds = parseInt(parts[1], 10) * 10;
+    return `${parts[0]}:${seconds.toString().padStart(2, "0")}`;
+  }
+  
+  return "12:00"; // Default fallback
 }

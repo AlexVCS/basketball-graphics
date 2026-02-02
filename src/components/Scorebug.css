@@ -224,11 +224,17 @@
   color: white;
 }
 
-/* Score input specific - wider for 3-digit numbers */
+/* Score input specific - larger, positioned below score display */
 .scorebug-score .editable-input {
-  width: 70px;
+  width: 90px;
+  height: 50px;
   font-size: 36px;
-  padding: 2px;
+  padding: 8px;
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
 }
 
 /* Clock input specific */
