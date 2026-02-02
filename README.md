@@ -64,6 +64,7 @@ Perfect for graphics operators, broadcast professionals, or developers building 
 - **Game Clock**: MM:SS format, max 12:00
 - **Shot Clock**: 0-24 seconds
 - **Scores**: 0-999 range
+- **Team Records**: (X-X) or (XX-XX) format, wins + losses ≤ 82
 - **Quarters**: 1st, 2nd, 3rd, 4th, OT, OT1-OT5
 
 ### 🎬 Demo Playback
