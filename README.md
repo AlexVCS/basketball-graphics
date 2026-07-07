@@ -5,7 +5,7 @@
   <p align="center">
     Interactive NBA scorebug editor with real-time validation and demo playback
     <br />
-    <a href="https://dev-basketball-graphics.apps.gaspar.ontampa.dev/">View Live Demo</a>
+    <a href="https://basketball-graphics.onrender.com/">View Live Demo</a>
     ·
     <a href="https://github.com/AlexVCS/basketball-graphics/issues">Report Bug</a>
   </p>
